@@ -117,8 +117,11 @@ https://commons.wikimedia.org/wiki/File:Vulkan_Logo_(Bug).svg.
 
 ## Deployment
 
-Serve this directory as the static site root and link directly to the five HTML
-pages under pages/en_US/. There is no index page. Relative links support a domain root
-or a subdirectory deployment. Hosting configuration is not supplied by this scaffold.
+Serve this directory as the static site root; `index.html` redirects to
+`pages/en_US/real_time_manim.html`. Relative links support a domain root or a
+subdirectory deployment. GitHub Pages deploys through
+`.github/workflows/pages.yml`, which publishes only `index.html`, `pages/` and
+`assets/`; the live site is
+https://beginwithf.github.io/real-time-manim_website/.
 
 See [architecture notes](docs/architecture.md) before extending the site.
