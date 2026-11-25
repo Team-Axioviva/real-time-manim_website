@@ -6,7 +6,12 @@
    Video parallax: the video scrolls a little faster than the text and the
    page. Its offset follows the item's distance from the viewport center,
    clamped to PARALLAX_MAX px, and the video is what gets the transform — the
-   .gallery-media wrapper keeps its reveal transition untouched. */
+   .gallery-media wrapper keeps its reveal transition untouched.
+
+   Fullscreen: every video gets an icon button (gallery.css) that toggles
+   native browser fullscreen, with the webkit fallback for Safari. While a
+   video is fullscreen its parallax transform is cleared (a translated video
+   would sit off-center) and re-applied on exit. */
 (function () {
   'use strict';
   var PARALLAX_K = 0.18;    // px of drift per px from viewport center
@@ -27,16 +32,65 @@
   }, { threshold: 0.15 });
   for (var j = 0; j < items.length; j++) io.observe(items[j]);
 
+  var videos = document.querySelectorAll('.gallery-item video');
+
+  // ---- Fullscreen ---------------------------------------------------------
+  var EXPAND = '<svg class="fs-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>';
+  var CONTRACT = '<svg class="fs-contract" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>';
+  var buttons = [];
+  for (var b = 0; b < videos.length; b++) {
+    (function (video) {
+      var media = video.closest('.gallery-media');
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'gallery-fullscreen';
+      btn.setAttribute('aria-label', 'Fullscreen');
+      btn.title = 'Fullscreen';
+      btn.innerHTML = EXPAND + CONTRACT;
+      media.appendChild(btn);
+      btn.addEventListener('click', function () {
+        if (isFullscreen(video)) exitFullscreen();
+        else requestFullscreen(video);
+      });
+      buttons.push({ video: video, btn: btn });
+    })(videos[b]);
+  }
+  function isFullscreen(v) {
+    return (document.fullscreenElement || document.webkitFullscreenElement) === v;
+  }
+  function requestFullscreen(v) {
+    if (v.requestFullscreen) v.requestFullscreen();
+    else if (v.webkitRequestFullscreen) v.webkitRequestFullscreen();
+  }
+  function exitFullscreen() {
+    if (document.exitFullscreen) document.exitFullscreen();
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+  }
+  function fsSync() {
+    var fs = document.fullscreenElement || document.webkitFullscreenElement;
+    for (var f = 0; f < buttons.length; f++) {
+      var entry = buttons[f];
+      var active = fs === entry.video;
+      entry.btn.classList.toggle('is-fullscreen', active);
+      entry.btn.setAttribute('aria-label', active ? 'Exit fullscreen' : 'Fullscreen');
+      if (active) entry.video.style.transform = 'none';
+      else updateParallax();
+    }
+  }
+  document.addEventListener('fullscreenchange', fsSync);
+  document.addEventListener('webkitfullscreenchange', fsSync);
+
+  // ---- Parallax -----------------------------------------------------------
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduced) return;
 
-  var videos = document.querySelectorAll('.gallery-item video');
   var ticking = false;
   function updateParallax() {
     ticking = false;
     var vc = window.innerHeight / 2;
     for (var k = 0; k < videos.length; k++) {
       var v = videos[k];
+      if (isFullscreen(v)) continue;  // never re-apply while fullscreen
       var it = v.closest('.gallery-item');
       if (!it) continue;
       var rect = it.getBoundingClientRect();

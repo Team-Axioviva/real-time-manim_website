@@ -40,6 +40,7 @@
   text-align: center;
 }
 
+.gallery-media { position: relative; }
 .gallery-media video {
   display: block;
   width: 100%;
@@ -48,6 +49,40 @@
   background: #000;
 }
 .item-video-center .gallery-media { width: min(100%, 960px); }
+
+/* Fullscreen toggle: icon button over the video's top-right corner, shown on
+   hover/focus; the contract icon replaces the expand icon while fullscreen. */
+.gallery-fullscreen {
+  position: absolute;
+  top: calc(12 * var(--unit));
+  right: calc(12 * var(--unit));
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: calc(36 * var(--unit));
+  height: calc(36 * var(--unit));
+  padding: 0;
+  border: 1px solid var(--wiki-line);
+  border-radius: calc(8 * var(--unit));
+  background: rgba(0, 0, 0, .55);
+  color: var(--wiki-foreground);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+}
+.gallery-media:hover .gallery-fullscreen,
+.gallery-fullscreen:focus-visible {
+  opacity: .9;
+  pointer-events: auto;
+}
+.gallery-fullscreen svg { width: 16px; height: 16px; }
+.gallery-fullscreen .fs-contract { display: none; }
+.gallery-fullscreen.is-fullscreen .fs-expand { display: none; }
+.gallery-fullscreen.is-fullscreen .fs-contract { display: block; }
+@media (hover: none) {
+  .gallery-fullscreen { opacity: .6; pointer-events: auto; }
+}
 
 .gallery-copy h2 {
   margin: 0 0 calc(14 * var(--unit));
