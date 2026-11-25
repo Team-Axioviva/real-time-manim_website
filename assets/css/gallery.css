@@ -144,8 +144,18 @@
   height: 100%;
   object-fit: cover;
 }
+/* The poster cover hides the always-playing video until hover (CSS :hover
+   works everywhere — play() from mouseenter is rejected by Safari). */
+.grid-cover {
+  position: absolute;
+  inset: 0;
+  background: #000 center / cover no-repeat;
+  transition: opacity .2s ease;
+}
+.grid-cell:hover .grid-cover { opacity: 0; }
 .grid-duration {
   position: absolute;
+  z-index: 1;
   right: calc(8 * var(--unit));
   bottom: calc(8 * var(--unit));
   padding: calc(2 * var(--unit)) calc(8 * var(--unit));

@@ -298,24 +298,25 @@
           cell.className = 'grid-cell';
           var doc = new DOMParser().parseFromString(block, 'text/html');
           var v = resolveVideoSrc(doc.querySelector('video') || document.createElement('video'));
-          v.removeAttribute('autoplay');   // grid videos wait for hover
+          // The video plays muted from load (autoplay is allowed muted in
+          // every browser, unlike play() from mouseenter which Safari
+          // rejects); the cover hides it until the cell is hovered.
           v.muted = true;
+          v.setAttribute('autoplay', '');
+          v.setAttribute('loop', '');
           v.setAttribute('playsinline', '');
-          v.setAttribute('preload', 'metadata');
           cell.appendChild(v);
+          var cover = document.createElement('div');
+          cover.className = 'grid-cover';
+          var poster = v.getAttribute('poster');
+          if (poster) cover.style.backgroundImage = 'url(' + poster + ')';
+          cell.appendChild(cover);
           var badge = document.createElement('span');
           badge.className = 'grid-duration';
           badge.textContent = '00:00';
           cell.appendChild(badge);
           v.addEventListener('loadedmetadata', function () {
             badge.textContent = fmtDur(v.duration);
-          });
-          cell.addEventListener('mouseenter', function () {
-            v.play().catch(function () {});
-          });
-          cell.addEventListener('mouseleave', function () {
-            v.pause();
-            v.currentTime = 0;
           });
           cell.addEventListener('dblclick', function () {
             if (isFullscreen(v)) exitFullscreen();
