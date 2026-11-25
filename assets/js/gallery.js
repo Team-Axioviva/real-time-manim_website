@@ -58,6 +58,12 @@
   function isFullscreen(v) {
     return (document.fullscreenElement || document.webkitFullscreenElement) === v;
   }
+  function btnOf(v) {
+    for (var bi = 0; bi < buttons.length; bi++) {
+      if (buttons[bi].video === v) return buttons[bi].btn;
+    }
+    return null;
+  }
   function requestFullscreen(v) {
     if (v.requestFullscreen) v.requestFullscreen();
     else if (v.webkitRequestFullscreen) v.webkitRequestFullscreen();
@@ -73,8 +79,12 @@
       var active = fs === entry.video;
       entry.btn.classList.toggle('is-fullscreen', active);
       entry.btn.setAttribute('aria-label', active ? 'Exit fullscreen' : 'Fullscreen');
-      if (active) entry.video.style.transform = 'none';
-      else updateParallax();
+      if (active) {
+        entry.video.style.transform = 'none';
+        entry.btn.style.transform = 'none';
+      } else {
+        updateParallax();
+      }
     }
   }
   document.addEventListener('fullscreenchange', fsSync);
@@ -99,6 +109,8 @@
       if (offset > PARALLAX_MAX) offset = PARALLAX_MAX;
       else if (offset < -PARALLAX_MAX) offset = -PARALLAX_MAX;
       v.style.transform = 'translate3d(0,' + offset.toFixed(2) + 'px,0)';
+      var vb = btnOf(v);
+      if (vb) vb.style.transform = 'translate3d(0,' + offset.toFixed(2) + 'px,0)';
     }
   }
   window.addEventListener('scroll', function () {
