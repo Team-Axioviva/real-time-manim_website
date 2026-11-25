@@ -50,8 +50,9 @@
 }
 .item-video-center .gallery-media { width: min(100%, 960px); }
 
-/* Fullscreen toggle: icon button over the video's top-right corner, shown on
-   hover/focus; the contract icon replaces the expand icon while fullscreen. */
+/* Fullscreen toggle: icon button over the video's top-right corner, always
+   visible at a soft opacity and full on hover/focus; the contract icon
+   replaces the expand icon while fullscreen. */
 .gallery-fullscreen {
   position: absolute;
   top: calc(12 * var(--unit));
@@ -67,22 +68,17 @@
   background: rgba(0, 0, 0, .55);
   color: var(--wiki-foreground);
   cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
+  opacity: .55;
   transition: opacity .18s ease;
 }
 .gallery-media:hover .gallery-fullscreen,
 .gallery-fullscreen:focus-visible {
-  opacity: .9;
-  pointer-events: auto;
+  opacity: .95;
 }
 .gallery-fullscreen svg { width: 16px; height: 16px; }
 .gallery-fullscreen .fs-contract { display: none; }
 .gallery-fullscreen.is-fullscreen .fs-expand { display: none; }
 .gallery-fullscreen.is-fullscreen .fs-contract { display: block; }
-@media (hover: none) {
-  .gallery-fullscreen { opacity: .6; pointer-events: auto; }
-}
 
 .gallery-copy h2 {
   margin: 0 0 calc(14 * var(--unit));
