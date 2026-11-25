@@ -1,0 +1,92 @@
+/* Gallery page (pages/en_US/gallary.html). Runs on the wiki's tokens
+   (wiki.css defines :root, the taskbar, and the base type), and adds the
+   three showcase layouts: video left / video right / video center. */
+
+.gallery {
+  max-width: 1560px;
+  margin: 0 auto;
+}
+
+/* Big title block. */
+.gallery-head {
+  padding: calc(110 * var(--unit)) 6vw calc(56 * var(--unit));
+  text-align: center;
+  border-bottom: 1px solid var(--wiki-line);
+}
+.gallery-title {
+  margin: 0;
+  font-size: calc(120 * var(--unit));
+  font-weight: normal;
+  letter-spacing: .04em;
+}
+.gallery-sub {
+  margin: calc(18 * var(--unit)) 0 0;
+  color: var(--wiki-muted);
+  font-size: calc(19 * var(--unit));
+}
+
+/* The three items. Each is a full-width band separated by a hairline,
+   like the wiki's sections. */
+.gallery-item {
+  display: grid;
+  align-items: center;
+  column-gap: calc(56 * var(--unit));
+  row-gap: calc(28 * var(--unit));
+  padding: calc(72 * var(--unit)) 6vw;
+  border-bottom: 1px solid var(--wiki-line);
+}
+/* 1: video left, text right. DOM order is media, copy. */
+.item-video-left { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+/* 2: video right, text left. DOM order is copy, media. */
+.item-video-right { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+/* 3: video big in the middle, text below it. */
+.item-video-center {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  text-align: center;
+}
+
+.gallery-media video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--wiki-line);
+  background: #000;
+}
+.item-video-center .gallery-media { width: min(100%, 960px); }
+
+.gallery-copy h2 {
+  margin: 0 0 calc(14 * var(--unit));
+  font-size: calc(32 * var(--unit));
+  font-weight: normal;
+}
+.gallery-copy p {
+  margin: 0;
+  color: var(--wiki-muted);
+  font-size: calc(18 * var(--unit));
+  line-height: 1.65;
+}
+.gallery-copy code {
+  padding: .08em .28em;
+  border-radius: 3px;
+  background: rgba(245, 245, 245, .1);
+  font-size: .85em;
+}
+.item-video-center .gallery-copy { width: min(100%, 720px); }
+
+/* The current page in the taskbar nav reads muted, like a hover. */
+.wiki-nav a[aria-current="page"] { opacity: .65; cursor: default; }
+
+@media (max-width: 720px) {
+  .gallery-item,
+  .item-video-left,
+  .item-video-right,
+  .item-video-center {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: stretch;
+    text-align: left;
+  }
+  .item-video-center .gallery-media,
+  .item-video-center .gallery-copy { width: 100%; }
+  .gallery-title { font-size: clamp(40px, 13vw, 72px); }
+}

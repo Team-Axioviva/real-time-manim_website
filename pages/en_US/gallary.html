@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <title>Real-Time Manim Gallary</title>
+  <link rel="icon" type="image/png" href="../../assets/images/real-time-manim-icon.png">
+  <link rel="apple-touch-icon" href="../../assets/images/real-time-manim-icon.png">
+  <link rel="stylesheet" href="../../assets/css/wiki.css">
+  <link rel="stylesheet" href="../../assets/css/gallery.css">
+</head>
+<body>
+  <header class="wiki-taskbar">
+    <a class="wiki-brand" href="real_time_manim.html"><img class="wiki-brand-logo" src="../../assets/images/real-time-manim-icon.png" alt="" width="38" height="38">Real-Time-Manim</a>
+    <nav class="wiki-nav" aria-label="Site">
+      <a href="real_time_manim.html">Product</a>
+      <a href="wiki.html">Wiki</a>
+      <a href="gallary.html" aria-current="page">Gallary</a>
+    </nav>
+    <!-- agent-only entry: zero-pixel button pointing to the agent wiki (wiki/agent/), not the normal wiki -->
+    <button type="button" id="agent-wiki" data-agent-wiki-path="/Users/niuyingkai/PHormation codes/2026fall/real-time-manim_website/wiki/agent" aria-hidden="true" tabindex="-1" title="Agent wiki" style="position:absolute;width:0;height:0;padding:0;border:0;overflow:hidden"></button>
+  </header>
+  <main class="gallery">
+    <header class="gallery-head">
+      <h1 class="gallery-title">Gallary</h1>
+      <p class="gallery-sub">What real-time-manim looks like when it runs — one showcase per layout.</p>
+    </header>
+
+    <section class="gallery-item item-video-left" aria-labelledby="slogan-heading">
+      <div class="gallery-media">
+        <video src="../../reference_for_real_time_manim/slogan.mp4" muted autoplay loop playsinline preload="auto" aria-label="The slogan strip from the full product page"></video>
+      </div>
+      <div class="gallery-copy">
+        <h2 id="slogan-heading">The slogan</h2>
+        <p>Real time, because rendering stops being a time limitation. One second, one strip — the line that plays on the full product page, with the whole project behind it.</p>
+      </div>
+    </section>
+
+    <section class="gallery-item item-video-right" aria-labelledby="hello-heading">
+      <div class="gallery-copy">
+        <h2 id="hello-heading">Hello RTM</h2>
+        <p>The first live window. “Hello world!” writes itself, then transforms into “Hello real-time-manim!” — every frame rendered as you watch, nothing pre-rendered.</p>
+      </div>
+      <div class="gallery-media">
+        <video src="../../assets/videos/live.mp4" muted autoplay loop playsinline preload="auto" aria-label="The first live RTM window"></video>
+      </div>
+    </section>
+
+    <section class="gallery-item item-video-center" aria-labelledby="export-heading">
+      <div class="gallery-media">
+        <video src="../../assets/videos/export-window.mp4" poster="../../assets/videos/export-window-poster.jpg" muted autoplay loop playsinline preload="auto" aria-label="Export demo: a window pops out and records instantly"></video>
+      </div>
+      <div class="gallery-copy">
+        <h2 id="export-heading">The export window</h2>
+        <p><code>fast_record_scene(Scene)</code> opens a window that pops out and records as it plays — 1920×1080, 60 fps, twelve seconds, H.264, no audio. What you watch is what you export.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
