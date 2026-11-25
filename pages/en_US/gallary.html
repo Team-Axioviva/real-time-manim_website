@@ -22,70 +22,11 @@
     <!-- agent-only entry: zero-pixel button pointing to the agent wiki (wiki/agent/), not the normal wiki -->
     <button type="button" id="agent-wiki" data-agent-wiki-path="/Users/niuyingkai/PHormation codes/2026fall/real-time-manim_website/wiki/agent" aria-hidden="true" tabindex="-1" title="Agent wiki" style="position:absolute;width:0;height:0;padding:0;border:0;overflow:hidden"></button>
   </header>
-  <main class="gallery">
+  <main class="gallery" data-source-root="../../gallery/en_US/" data-entry-path="README.md" data-manifest-path="manifest.json" data-grid-path="grid.md">
     <header class="gallery-head">
       <h1 class="gallery-title">Gallary</h1>
     </header>
-
-    <section class="gallery-item item-video-left" aria-labelledby="item1-heading">
-      <div class="gallery-media">
-        <video src="../../assets/videos/placeholder.mp4" muted autoplay loop playsinline preload="auto" aria-label="Placeholder video: square to circle and back"></video>
-      </div>
-      <div class="gallery-copy">
-        <h2 id="item1-heading">Lorem ipsum dolor sit amet</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      </div>
-    </section>
-
-    <section class="gallery-item item-video-right" aria-labelledby="item2-heading">
-      <div class="gallery-copy">
-        <h2 id="item2-heading">Lorem ipsum dolor sit amet</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      </div>
-      <div class="gallery-media">
-        <video src="../../assets/videos/placeholder-2.mp4" muted autoplay loop playsinline preload="auto" aria-label="Placeholder video: triangle to star and back"></video>
-      </div>
-    </section>
-
-    <section class="gallery-item item-video-left" aria-labelledby="item3-heading">
-      <div class="gallery-media">
-        <video src="../../assets/videos/placeholder-3.mp4" muted autoplay loop playsinline preload="auto" aria-label="Placeholder video: hexagon to circle and back"></video>
-      </div>
-      <div class="gallery-copy">
-        <h2 id="item3-heading">Lorem ipsum dolor sit amet</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      </div>
-    </section>
-
-    <section class="gallery-item item-video-center" aria-labelledby="item4-heading">
-      <div class="gallery-media">
-        <video src="../../assets/videos/placeholder.mp4" muted autoplay loop playsinline preload="auto" aria-label="Placeholder video: square to circle and back"></video>
-      </div>
-      <div class="gallery-copy">
-        <h2 id="item4-heading">Lorem ipsum dolor sit amet</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      </div>
-    </section>
-
-    <section class="gallery-item item-video-right" aria-labelledby="item5-heading">
-      <div class="gallery-copy">
-        <h2 id="item5-heading">Lorem ipsum dolor sit amet</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      </div>
-      <div class="gallery-media">
-        <video src="../../assets/videos/placeholder-3.mp4" muted autoplay loop playsinline preload="auto" aria-label="Placeholder video: hexagon to circle and back"></video>
-      </div>
-    </section>
-
-    <section class="gallery-item item-video-center" aria-labelledby="item6-heading">
-      <div class="gallery-media">
-        <video src="../../assets/videos/placeholder-2.mp4" muted autoplay loop playsinline preload="auto" aria-label="Placeholder video: triangle to star and back"></video>
-      </div>
-      <div class="gallery-copy">
-        <h2 id="item6-heading">Lorem ipsum dolor sit amet</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      </div>
-    </section>
+    <p class="gallery-status" id="gallery-status" role="status" aria-live="polite">Loading entries...</p>
   </main>
 </body>
 </html>

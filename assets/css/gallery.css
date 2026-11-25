@@ -22,6 +22,11 @@
 
 /* The items. Each is a full-width band; no hairlines between items
    (user rule 2026-11-25: no split line between videos). */
+.gallery-status {
+  padding: calc(40 * var(--unit)) 6vw;
+  color: var(--wiki-muted);
+  font-size: calc(17 * var(--unit));
+}
 .gallery-item {
   display: grid;
   align-items: center;
@@ -116,6 +121,41 @@
 /* The current page in the taskbar nav reads muted, like a hover. */
 .wiki-nav a[aria-current="page"] { opacity: .65; cursor: default; }
 
+/* Bilibili-style video grid: 4 per row filling the line, no text — just the
+   16:9 cell, the corner duration badge, hover-to-play and dblclick fullscreen. */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: calc(16 * var(--unit));
+  padding: calc(72 * var(--unit)) 6vw;
+}
+.grid-cell {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--wiki-line);
+  border-radius: calc(8 * var(--unit));
+  background: #000;
+  overflow: hidden;
+  cursor: pointer;
+}
+.grid-cell video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.grid-duration {
+  position: absolute;
+  right: calc(8 * var(--unit));
+  bottom: calc(8 * var(--unit));
+  padding: calc(2 * var(--unit)) calc(8 * var(--unit));
+  border-radius: calc(4 * var(--unit));
+  background: rgba(0, 0, 0, .6);
+  color: #fff;
+  font-size: calc(14 * var(--unit));
+  pointer-events: none;
+}
+
 @media (max-width: 720px) {
   .gallery-item,
   .item-video-left,
@@ -128,6 +168,7 @@
   .item-video-center .gallery-media,
   .item-video-center .gallery-copy { width: 100%; }
   .gallery-title { font-size: clamp(40px, 13vw, 72px); }
+  .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
