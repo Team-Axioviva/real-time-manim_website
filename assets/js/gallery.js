@@ -9,8 +9,8 @@
    .gallery-media wrapper keeps its reveal transition untouched. */
 (function () {
   'use strict';
-  var PARALLAX_K = 0.08;    // px of drift per px from viewport center
-  var PARALLAX_MAX = 40;    // px cap, so the drift stays a small overtake
+  var PARALLAX_K = 0.18;    // px of drift per px from viewport center
+  var PARALLAX_MAX = 120;   // px cap, so the drift stays a small overtake
 
   var items = document.querySelectorAll('.gallery-item');
   if (!('IntersectionObserver' in window)) {
