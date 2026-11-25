@@ -7,10 +7,10 @@
   margin: 0 auto;
 }
 
-/* Big title block. */
+/* Title block: big title at the left, no sub-line, hairline under it. */
 .gallery-head {
   padding: calc(110 * var(--unit)) 6vw calc(56 * var(--unit));
-  text-align: center;
+  text-align: left;
   border-bottom: 1px solid var(--wiki-line);
 }
 .gallery-title {
@@ -19,21 +19,15 @@
   font-weight: normal;
   letter-spacing: .04em;
 }
-.gallery-sub {
-  margin: calc(18 * var(--unit)) 0 0;
-  color: var(--wiki-muted);
-  font-size: calc(19 * var(--unit));
-}
 
-/* The three items. Each is a full-width band separated by a hairline,
-   like the wiki's sections. */
+/* The items. Each is a full-width band; no hairlines between items
+   (user rule 2026-11-25: no split line between videos). */
 .gallery-item {
   display: grid;
   align-items: center;
   column-gap: calc(56 * var(--unit));
   row-gap: calc(28 * var(--unit));
   padding: calc(72 * var(--unit)) 6vw;
-  border-bottom: 1px solid var(--wiki-line);
 }
 /* 1: video left, text right. DOM order is media, copy. */
 .item-video-left { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
@@ -66,13 +60,27 @@
   font-size: calc(18 * var(--unit));
   line-height: 1.65;
 }
-.gallery-copy code {
-  padding: .08em .28em;
-  border-radius: 3px;
-  background: rgba(245, 245, 245, .1);
-  font-size: .85em;
-}
 .item-video-center .gallery-copy { width: min(100%, 720px); }
+
+/* Scroll reveal: each item is one bound unit — it fades in and shifts up
+   when scrolled into view, and its parts stagger per layout (see the delay
+   rules below). gallery.js adds .is-revealed when the item intersects. */
+.gallery-item .gallery-media,
+.gallery-item .gallery-copy {
+  opacity: 0;
+  transform: translateY(calc(28 * var(--unit)));
+  transition: opacity .7s ease, transform .7s ease;
+}
+.gallery-item.is-revealed .gallery-media,
+.gallery-item.is-revealed .gallery-copy {
+  opacity: 1;
+  transform: none;
+}
+/* Horizontal layouts: the text enters first, the video lags 300 ms. */
+.item-video-left .gallery-media,
+.item-video-right .gallery-media { transition-delay: 300ms; }
+/* Vertical layout: the video enters first, the text lags 300 ms. */
+.item-video-center .gallery-copy { transition-delay: 300ms; }
 
 /* The current page in the taskbar nav reads muted, like a hover. */
 .wiki-nav a[aria-current="page"] { opacity: .65; cursor: default; }
@@ -89,4 +97,13 @@
   .item-video-center .gallery-media,
   .item-video-center .gallery-copy { width: 100%; }
   .gallery-title { font-size: clamp(40px, 13vw, 72px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-item .gallery-media,
+  .gallery-item .gallery-copy {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
