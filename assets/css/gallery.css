@@ -102,13 +102,15 @@
    when scrolled into view, and its parts stagger per layout (see the delay
    rules below). gallery.js adds .is-revealed when the item intersects. */
 .gallery-item .gallery-media,
-.gallery-item .gallery-copy {
+.gallery-item .gallery-copy,
+.gallery-grid {
   opacity: 0;
   transform: translateY(calc(28 * var(--unit)));
   transition: opacity .7s ease, transform .7s ease;
 }
 .gallery-item.is-revealed .gallery-media,
-.gallery-item.is-revealed .gallery-copy {
+.gallery-item.is-revealed .gallery-copy,
+.gallery-grid.is-revealed {
   opacity: 1;
   transform: none;
 }
@@ -183,7 +185,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .gallery-item .gallery-media,
-  .gallery-item .gallery-copy {
+  .gallery-item .gallery-copy,
+  .gallery-grid {
     opacity: 1;
     transform: none;
     transition: none;

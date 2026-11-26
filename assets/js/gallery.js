@@ -128,22 +128,24 @@
   }
 
   // ---- Behaviours (wired after the items exist) ----------------------------
+  var revealIO = null;
   function setup() {
     var items = document.querySelectorAll('.gallery-item');
 
-    // Scroll reveal.
+    // Scroll reveal: items are observed here; the grid (rendered after) is
+    // armed by renderGrid through revealIO.
     if (!('IntersectionObserver' in window)) {
       for (var i = 0; i < items.length; i++) items[i].classList.add('is-revealed');
     } else {
-      var io = new IntersectionObserver(function (entries) {
+      revealIO = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-revealed');
-            io.unobserve(entry.target);
+            revealIO.unobserve(entry.target);
           }
         });
       }, { threshold: 0.15 });
-      for (var j = 0; j < items.length; j++) io.observe(items[j]);
+      for (var j = 0; j < items.length; j++) revealIO.observe(items[j]);
     }
 
     var videos = document.querySelectorAll('.gallery-item video');
@@ -325,6 +327,9 @@
           grid.appendChild(cell);
         });
         gallery.appendChild(grid);
+        // The grid reveals like the big items (one bound unit, fade+shift-up).
+        if (revealIO) revealIO.observe(grid);
+        else grid.classList.add('is-revealed');
       })
       .catch(function () {});
   }
