@@ -128,24 +128,23 @@
   }
 
   // ---- Behaviours (wired after the items exist) ----------------------------
-  var revealIO = null;
   function setup() {
     var items = document.querySelectorAll('.gallery-item');
 
-    // Scroll reveal: items are observed here; the grid (rendered after) is
-    // armed by renderGrid through revealIO.
+    // Scroll reveal for the big items (threshold .15; the grid has its own,
+    // stricter trigger — see renderGrid).
     if (!('IntersectionObserver' in window)) {
       for (var i = 0; i < items.length; i++) items[i].classList.add('is-revealed');
     } else {
-      revealIO = new IntersectionObserver(function (entries) {
+      var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-revealed');
-            revealIO.unobserve(entry.target);
+            io.unobserve(entry.target);
           }
         });
       }, { threshold: 0.15 });
-      for (var j = 0; j < items.length; j++) revealIO.observe(items[j]);
+      for (var j = 0; j < items.length; j++) io.observe(items[j]);
     }
 
     var videos = document.querySelectorAll('.gallery-item video');
@@ -327,9 +326,22 @@
           grid.appendChild(cell);
         });
         gallery.appendChild(grid);
-        // The grid reveals like the big items (one bound unit, fade+shift-up).
-        if (revealIO) revealIO.observe(grid);
-        else grid.classList.add('is-revealed');
+        // The grid's fade+shift-up is independent: its own observer fires
+        // only once the grid AREA is actually scrolled to (0.4 of it in
+        // view, not the 0.15 sliver the big items use).
+        if (!('IntersectionObserver' in window)) {
+          grid.classList.add('is-revealed');
+        } else {
+          var gridIO = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                grid.classList.add('is-revealed');
+                gridIO.unobserve(grid);
+              }
+            });
+          }, { threshold: 0.4 });
+          gridIO.observe(grid);
+        }
       })
       .catch(function () {});
   }
